@@ -18,9 +18,9 @@ export class AuthService {
 
     async register(dto: RegisterDto): Promise<UserWithoutPassword | HttpException> {
         const hashedPassword = await bcrypt.hash(dto.password, 10)
-        const { password, ...userWithoutPassword } = await this.usersRepository.create({
+        const { passwordHash, ...userWithoutPassword } = await this.usersRepository.create({
             ...dto,
-            password: hashedPassword,
+            passwordHash: hashedPassword,
             balance: 0,
             isAdmin: false 
         })
@@ -29,8 +29,8 @@ export class AuthService {
 
     async validateUser(email: string, pass: string): Promise<UserWithoutPassword | null> {
         const user = await this.usersRepository.findByEmail(email);
-        if (user && await bcrypt.compare(pass, user.password)) {
-            const { password, ...result } = user;
+        if (user && await bcrypt.compare(pass, user.passwordHash)) {
+            const { passwordHash, ...result } = user;
             return result;
         }
         return null;

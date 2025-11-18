@@ -6,4 +6,4 @@ export interface IFullUser extends User {
     _id?: Types.ObjectId
 } 
 
-export type UserWithoutPassword = Omit<IFullUser, 'password'>;
+export type UserWithoutPassword = Omit<IFullUser, 'passwordHash'>;
