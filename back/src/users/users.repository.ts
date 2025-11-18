@@ -36,7 +36,7 @@ export class UsersRepository {
     }
 
     async findByEmail(email: string) {
-        const user = await this.userModel.findOne({ email }).select('+password')
+        const user = await this.userModel.findOne({ email }).select('+passwordHash')
         return user?.toObject()
     }
 
