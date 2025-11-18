@@ -15,13 +15,13 @@ export class ValidateUserIdPipe implements PipeTransform<string> {
 
     async transform(value: string, metadata: ArgumentMetadata) {
         if (!Types.ObjectId.isValid(value)) {
-        throw new NotFoundException(`ID "${value}" не верный objectId`);
+            throw new NotFoundException(`ID "${value}" не верный objectId`);
         }
 
 
         const entity = await this.usersRepository.findById(value);
         if (!entity) {
-        throw new NotFoundException(`Сущность по ID "${value}" не найдена`);
+            throw new NotFoundException(`Сущность по ID "${value}" не найдена`);
         }
 
         return entity; 
